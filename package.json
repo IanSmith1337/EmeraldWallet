@@ -1,0 +1,72 @@
+{
+  "name": "emeraldwallet",
+  "version": "0.0.1",
+  "description": "One ETH wallet to rule them all...",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"TBC\"",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IanSmith1337/EmeraldWallet.git"
+  },
+  "keywords": [
+    "ETH",
+    "Wallet",
+    "Cryptocurrency",
+    "Blockchain",
+    "Etherium",
+    "Gwei",
+    "Bridge",
+    "Convert",
+    "Binance",
+    "Bitcoin"
+  ],
+  "author": "Ian Smith, Ibana, Ryley Ziegler, Daniel Wright",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IanSmith1337/EmeraldWallet/issues"
+  },
+  "homepage": "https://github.com/IanSmith1337/EmeraldWallet#readme",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.66",
+    "@electron-forge/maker-deb": "^6.0.0-beta.66",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.66",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.66",
+    "@electron-forge/maker-zip": "^6.0.0-beta.66",
+    "electron": "^20.1.4"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "emeraldwallet"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  }
+}
