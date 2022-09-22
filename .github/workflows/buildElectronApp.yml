@@ -2,8 +2,9 @@ name: Build/release
 
 on:
   push:
-    branches:
-      - refs/tags/*
+    tags:
+      - v*
+      
 jobs:
   release:
     runs-on: ${{ matrix.os }}
