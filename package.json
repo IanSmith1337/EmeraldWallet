@@ -37,14 +37,26 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.66",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.66",
     "@electron-forge/maker-zip": "^6.0.0-beta.66",
-    "electron": "^20.1.4",
-    "electron-builder": "^23.3.3"
+    "@electron-forge/publisher-github": "^6.0.0-beta.66",
+    "electron": "^20.1.4"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0"
   },
   "config": {
     "forge": {
+        "publishers": [
+          {
+            "name": "@electron-forge/publisher-github",
+            "config": {
+              "repository": {
+                "owner": "IanSmith1337",
+                "name": "EmeraldWallet"
+              }
+            }
+          }
+        ]
+      },
       "packagerConfig": {},
       "makers": [
         {
