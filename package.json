@@ -68,7 +68,18 @@
           "config": {}
         }
       ],
-      "publishers": []
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "IanSmith1337",
+              "name": "EmeraldWallet"
+            },
+            "draft": true
+          }
+        }
+      ]
     },
     "packagerConfig": {},
     "makers": [
