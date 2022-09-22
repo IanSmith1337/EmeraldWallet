@@ -45,41 +45,40 @@
   },
   "config": {
     "forge": {
-        "publishers": [
-          {
-            "name": "@electron-forge/publisher-github",
-            "config": {
-              "repository": {
-                "owner": "IanSmith1337",
-                "name": "EmeraldWallet"
-              }
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "IanSmith1337",
+              "name": "EmeraldWallet"
             }
           }
-        ]
-      },
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "emeraldwallet"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
         }
       ]
-    }
+    },
+    "packagerConfig": {},
+    "makers": [
+      {
+        "name": "@electron-forge/maker-squirrel",
+        "config": {
+          "name": "emeraldwallet"
+        }
+      },
+      {
+        "name": "@electron-forge/maker-zip",
+        "platforms": [
+          "darwin"
+        ]
+      },
+      {
+        "name": "@electron-forge/maker-deb",
+        "config": {}
+      },
+      {
+        "name": "@electron-forge/maker-rpm",
+        "config": {}
+      }
+    ]
   }
 }
