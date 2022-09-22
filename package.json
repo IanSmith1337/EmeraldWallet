@@ -45,17 +45,30 @@
   },
   "config": {
     "forge": {
-      "publishers": [
+      "packagerConfig": {},
+      "makers": [
         {
-          "name": "@electron-forge/publisher-github",
+          "name": "@electron-forge/maker-squirrel",
           "config": {
-            "repository": {
-              "owner": "IanSmith1337",
-              "name": "EmeraldWallet"
-            }
+            "name": "emeraldwallet"
           }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
         }
-      ]
+      ],
+      "publishers": []
     },
     "packagerConfig": {},
     "makers": [
