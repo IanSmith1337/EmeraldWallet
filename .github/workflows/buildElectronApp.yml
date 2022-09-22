@@ -3,7 +3,7 @@ name: Build & Release
 on:
   push:
     tags:
-      - v*
+      - '*'
 
 jobs:
   build_for_linux:
@@ -18,8 +18,8 @@ jobs:
     - name: build
       run: npm run make
     - name: publish
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npm run publish
 
   build_for_mac:
