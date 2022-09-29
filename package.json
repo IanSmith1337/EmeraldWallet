@@ -4,7 +4,7 @@
   "description": "One ETH wallet to rule them all...",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"TBC\"",
+    "test": "echo \"Not Implemented Yet\"",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
