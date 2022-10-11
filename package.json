@@ -42,7 +42,8 @@
     "electron": "^20.1.4"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "web3": "^1.8.0"
   },
   "config": {
     "forge": {
