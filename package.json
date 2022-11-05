@@ -1,0 +1,24 @@
+{
+  "name": "geocoinweb3",
+  "version": "1.0.0",
+  "description": "One ETH wallet to rule them all...",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IanSmith1337/GeocoinWeb3.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IanSmith1337/GeocoinWeb3/issues"
+  },
+  "homepage": "https://github.com/IanSmith1337/GeocoinWeb3#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "hardhat": "^2.12.2"
+  }
+}
