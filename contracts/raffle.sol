@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 
-
+// Used to join a raffle for a geo-coin NFT.
 contract Raffle {
     address[] users;
     
@@ -21,6 +21,7 @@ contract Raffle {
         else 
             return false;
     }
+
     // Adds user to raffle if they dont already exist.
     function joinRaffle(address user) public {
         if (!checkIfUserExists(user))
