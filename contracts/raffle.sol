@@ -6,6 +6,7 @@ import "hardhat/console.sol";
 contract Raffle {
     address[] users;
     
+    // Ensures no duplicates to be added to the users array.
     function checkIfUserExists(address user) private view returns (bool){
         uint i = 0;
         if( users.length >= 1){
