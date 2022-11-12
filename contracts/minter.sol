@@ -13,7 +13,7 @@ contract GeoNFT is ERC721 {
     string public baseTokenURI;
 
     constructor() ERC721("GeocoinNFT", "GNFT") {
-        baseTokenURI = "";
+        baseTokenURI = "https://raw.githubusercontent.com/IanSmith1337/GeocoinWeb3/meta/meta/";
     }
 
     function mintTo(address recipient)
@@ -34,5 +34,9 @@ contract GeoNFT is ERC721 {
     /// @dev Sets the base token URI prefix.
     function setBaseTokenURI(string memory _baseTokenURI) public {
         baseTokenURI = _baseTokenURI;
+    }
+
+    function contractURI() public pure returns (string memory) {
+        return "https://raw.githubusercontent.com/IanSmith1337/GeocoinWeb3/meta/meta/contract.json";
     }
 }
