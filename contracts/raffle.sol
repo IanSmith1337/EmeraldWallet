@@ -2,25 +2,27 @@
 pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/PullPayment.sol";
+
 // Used to join a raffle for a geo-coin NFT.
-contract Raffle {
+contract Raffle is Ownable, PullPayment {
     mapping (address => User) private _users;
-    uint256 private _cost = 0.25;
+    address payable private withdrawAddress;
+    uint256 private _cost = 0.25 ether;
     address[] public registeredUsers;
     address[] public awardedUsers;
-    address private _owner;
     
     struct User {
         address ID;
         bool isRegisteredForRaffle;
-        uint256 balance;
     }
 
     error InsufficientPayment(uint raffleCost);
     error InvalidAddress(address addr);
 
     constructor () {
-        _owner = msg.sender;
+        withdrawAddress = payable(owner());
     }
 
     // Ensures user exists for current sender.
@@ -31,41 +33,35 @@ contract Raffle {
             return false;
     }
 
-    // Creating new user for current sender with funds provided and adding them to the mapping.
-    function addUser() public payable {
-        require(!checkIfUserExists(), "Error: Cannot add duplicate user to contract.");
-        _users[msg.sender] = new User(msg.sender, false, 0);
-        require((_users[msg.sender].balance + msg.value) > _users[msg.sender].balance);
-        _users[msg.sender].balance += msg.value;
+    function checkIfUserIsRegistered() private view returns (bool){
+        return _users[msg.sender].isRegisteredForRaffle;
     }
 
-    // Allows current user to buy into the raffle if they haven't joined yet.
-    function buyRaffleTicket() public {
-        require(checkIfUserExists() && _users[msg.sender].isRegisteredForRaffle == false, "Error: User cannot join raffle twice.");
-        if (_users[msg.sender].balance < _cost) 
+    // Creates user and buys into the raffle.
+    function addUserAndBuyRaffleTicket() public payable {
+        require(!checkIfUserExists(), "Error: Cannot add duplicate user to contract.");
+        _users[msg.sender] = User(msg.sender, false);
+        if (msg.value != _cost)
             revert InsufficientPayment({
                 raffleCost: _cost
             });
         else
-            require((_users[msg.sender].balance - _cost) < _users[msg.sender].balance);
-            payable(_owner).transfer(_cost);
-            _users[msg.sender].balance -= _cost;
             registeredUsers.push(msg.sender);
             _users[msg.sender].isRegisteredForRaffle = true;
     }
 
     // Gets all users in raffle.
-    function getUsersInRaffle() public view ownerOnly returns (address[] memory){
+    function getUsersInRaffle() public view onlyOwner returns (address[] memory){
         return registeredUsers;
     }
 
     // Gets all winners from the raffle.
-    function getWinnersFromRaffle() public view ownerOnly returns (address[] memory){
+    function getWinnersFromRaffle() public view onlyOwner returns (address[] memory){
         return awardedUsers;
     }
-    
-    modifier ownerOnly {
-        require(_owner == msg.sender, "Error: You're not the owner of this contract.");
-        _;
+
+    /// @dev Overridden in order to make it an onlyOwner function
+    function withdrawPayments(address payable payee) public override onlyOwner virtual {
+        super.withdrawPayments(payee);
     }
 }
