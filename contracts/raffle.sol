@@ -17,6 +17,7 @@ contract Raffle {
     }
 
     error InsufficientPayment(uint raffleCost);
+    error InvalidAddress(address addr);
 
     constructor () {
         _owner = msg.sender;
@@ -54,12 +55,17 @@ contract Raffle {
     }
 
     // Gets all users in raffle.
-    function getUsersInRaffle() public view returns (address[] memory){
+    function getUsersInRaffle() public view ownerOnly returns (address[] memory){
         return registeredUsers;
     }
 
     // Gets all winners from the raffle.
-    function getWinnersFromRaffle() public view returns (address[] memory){
+    function getWinnersFromRaffle() public view ownerOnly returns (address[] memory){
         return awardedUsers;
+    }
+    
+    modifier ownerOnly {
+        require(_owner == msg.sender, "Error: You're not the owner of this contract.");
+        _;
     }
 }

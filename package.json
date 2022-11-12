@@ -19,6 +19,11 @@
   "homepage": "https://github.com/IanSmith1337/GeocoinWeb3#readme",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
-    "hardhat": "^2.12.2"
+    "hardhat": "^2.12.2",
+    "solc": "^0.8.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.8.0",
+    "solc": "^0.8.0"
   }
 }
