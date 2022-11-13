@@ -20,6 +20,7 @@ contract Raffle is Ownable, PullPayment {
 
     error InsufficientPayment(uint raffleCost);
     error InvalidAddress(address addr);
+    error duplicateWinner(address addr);
 
     constructor () {
         withdrawAddress = payable(owner());
@@ -58,6 +59,17 @@ contract Raffle is Ownable, PullPayment {
     // Gets all winners from the raffle.
     function getWinnersFromRaffle() public view onlyOwner returns (address[] memory){
         return awardedUsers;
+    }
+
+    // Adds winner from the raffle to awardedUsers.
+    function setWinnersFromRaffle(address user) public onlyOwner {
+        for (uint256 u = 0; u < awardedUsers.length; u++) {
+            if(user == awardedUsers[u]) 
+                revert duplicateWinner({
+                    addr: user
+                });
+        }
+        awardedUsers.push(user);
     }
 
     /// @dev Overridden in order to make it an onlyOwner function
