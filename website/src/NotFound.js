@@ -8,9 +8,9 @@ function NotFound() {
             <title>Error 404 Not Found</title>
 
             <body className="Body">
-            <h1>Error 404</h1>
-            <a href={'./'}><img src={Lost} className="Site-logo" alt="logo"/></a>
 
+            <a href={'./'}><img src={Lost} className="Site-logo" alt="logo"/></a>
+<h1> Error 404</h1>
             <h3>Page not found</h3>
             </body>
             <footer className={"Footer"}>
