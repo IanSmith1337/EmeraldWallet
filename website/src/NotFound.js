@@ -1,5 +1,5 @@
 import React from 'react';
-import Lost from './image/favpng_compass.png';
+import Lost from './image/NicePng_compass-north-png_4242654.png';
 import './components/Styles/Site.css'
 function NotFound() {
     return (
