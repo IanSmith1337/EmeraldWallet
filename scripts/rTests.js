@@ -146,6 +146,7 @@ const main = async () => {
       console.log(win)
     })
   }
+  console.log(' ')
 }
 
 const runMain = async () => {
