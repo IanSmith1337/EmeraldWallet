@@ -11,7 +11,7 @@ function NotFound() {
 
             <a href={'./'}><img src={Lost} className="Site-logo" alt="logo"/></a>
 <h1> Error 404</h1>
-            <h3>Page not found</h3>
+            <h3>Page Not Found</h3>
             </body>
             <footer className={"Footer"}>
                 <div className={'Back'}>
