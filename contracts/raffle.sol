@@ -44,6 +44,7 @@ contract Raffle is Ownable, PullPayment {
     function addUser() public {
         require(!checkIfUserExists(), "Error: Cannot add duplicate user to contract.");
         _users[msg.sender] = User(msg.sender, 0);
+        console.log("Added User");
     }
 
     // Allow user to buy into raffle
@@ -67,7 +68,7 @@ contract Raffle is Ownable, PullPayment {
     // registeredUsers = {0x1, 0x2, 0x3, 0x4}
     // tickets = 1, 2, 3, 4
     // weighted = {0x1, 0x2, 0x2, 0x3, 0x3, 0x3, 0x4, 0x4, 0x4, 0x4}
-    function calcWeightedArrayFromRaffle() private onlyOwner {
+    function calcWeightedArrayFromRaffle() public onlyOwner {
         for (uint256 i = 0; i < registeredUsers.length; i++) {
             for (uint256 j = 0; j < _users[registeredUsers[i]].tickets; j++) {
                 weighted.push(registeredUsers[i]);
@@ -94,6 +95,7 @@ contract Raffle is Ownable, PullPayment {
                 });
         }
         awardedUsers.push(user);
+        console.log(awardedUsers[0]);
     }
 
     /// @dev Overridden in order to make it an onlyOwner function
@@ -101,7 +103,7 @@ contract Raffle is Ownable, PullPayment {
         super.withdrawPayments(payee);
     }
 
-    function reset() private onlyOwner {
+    function reset() public onlyOwner {
         for (uint256 i = 0; i < registeredUsers.length; i++) {
             _users[registeredUsers[i]].tickets = 0;
         }
