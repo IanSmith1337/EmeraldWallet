@@ -1,4 +1,5 @@
 const { ethers } = require('ethers')
+const { getContractAt } = require('@nomiclabs/hardhat-ethers/internal/helpers')
 
 // Helper method for fetching environment variables from .env
 function getEnvVariable(key, defaultValue) {
@@ -13,7 +14,7 @@ function getEnvVariable(key, defaultValue) {
 
 // Helper method for fetching a connection provider to the Ethereum network
 function getProvider() {
-  return ethers.getDefaultProvider(getEnvVariable('NETWORK', 'rinkeby'), {
+  return ethers.getDefaultProvider(getEnvVariable('NETWORK', 'goerli'), {
     alchemy: getEnvVariable('ALCHEMY_KEY'),
   })
 }
