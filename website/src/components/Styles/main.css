@@ -8,10 +8,10 @@
 }
 
 :root {
-    --mainColor: #eee;
+    --mainColor: #CCD9D4;
     --mainColorLight: #5F87FF;
     --secondaryColor: #5F87FF;
-    --textColor: #4169E1;
+    --textColor: #537332;
 }
 
 header {
