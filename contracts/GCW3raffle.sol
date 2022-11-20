@@ -4,9 +4,10 @@ import "hardhat/console.sol";
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/PullPayment.sol";
+import "./GCW3Admin.sol";
 
 // Used to join a raffle for a geo-coin NFT.
-contract GCW3Raffle is Ownable, PullPayment {
+contract GCW3Raffle is Ownable, PullPayment, GCW3Admin {
     mapping (address => User) private _users;
     uint256 private _cost = 0.01 ether;
     address[] public registeredUsers;
@@ -71,7 +72,7 @@ contract GCW3Raffle is Ownable, PullPayment {
     // registeredUsers = {0x1, 0x2, 0x3, 0x4}
     // user.tickets = {1, 2, 3, 4}
     // weighted = {0x1, 0x2, 0x2, 0x3, 0x3, 0x3, 0x4, 0x4, 0x4, 0x4}
-    function calcWeightedArrayFromRaffle() public onlyOwner {
+    function calcWeightedArrayFromRaffle() public isAdmin {
         for (uint256 i = 0; i < registeredUsers.length; i++) {
             for (uint256 j = 0; j < _users[registeredUsers[i]].tickets; j++) {
                 weighted.push(registeredUsers[i]);
@@ -80,17 +81,17 @@ contract GCW3Raffle is Ownable, PullPayment {
     }
 
     // Gets weighted users from the raffle.
-    function getWeightedFromRaffle() public view onlyOwner returns (address[] memory){
+    function getWeightedFromRaffle() public view isAdmin returns (address[] memory){
         return weighted;
     }
 
     // Gets all winners from the raffle.
-    function getWinnersFromRaffle() public view onlyOwner returns (address[] memory){
+    function getWinnersFromRaffle() public view isAdmin returns (address[] memory){
         return awardedUsers;
     }
 
     // Gets number of tickets the current user has purchased for the next raffle.
-    function getTicketCount() public view onlyOwner returns (uint){
+    function getTicketCount() public view isAdmin returns (uint){
         require(checkIfUserExists(), "Error: User doesn't exist yet.");
         if(!checkIfUserIsRegistered())
             return 0;
@@ -99,7 +100,7 @@ contract GCW3Raffle is Ownable, PullPayment {
     }
 
     // Adds winner from the raffle to awardedUsers.
-    function setWinnersFromRaffle(address user) public onlyOwner {
+    function setWinnersFromRaffle(address user) public isAdmin {
         for (uint256 u = 0; u < awardedUsers.length; u++) {
             if(user == awardedUsers[u]) 
                 revert duplicateWinner({
@@ -114,7 +115,7 @@ contract GCW3Raffle is Ownable, PullPayment {
         super.withdrawPayments(payee);
     }
 
-    function reset() public onlyOwner {
+    function reset() public isAdmin {
         for (uint256 i = 0; i < registeredUsers.length; i++) {
             _users[registeredUsers[i]].tickets = 0;
         }
