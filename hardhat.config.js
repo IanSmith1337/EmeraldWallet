@@ -1,6 +1,7 @@
-require('@nomicfoundation/hardhat-toolbox')
+//require('@nomicfoundation/hardhat-toolbox')
 
 /** @type import('hardhat/config').HardhatUserConfig */
+/*
 require('dotenv').config()
 require('@nomiclabs/hardhat-ethers')
 require('./scripts/deploy.js')
@@ -22,4 +23,10 @@ module.exports = {
       accounts: [`0x${ACCOUNT_PRIVATE_KEY}`],
     },
   },
-}
+} */
+
+require("@nomicfoundation/hardhat-toolbox");
+/** @type import('hardhat/config').HardhatUserConfig */
+module.exports = {
+  solidity: "0.8.17",
+};
