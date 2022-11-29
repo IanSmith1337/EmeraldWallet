@@ -1,10 +1,14 @@
 .Body {
-    background-color: #5F87FF;
-    min-height: 80vh;
+    background-color: #011C50;
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: white;
+}
+a {
+    color: white;
+    text-decoration: underline;
 }

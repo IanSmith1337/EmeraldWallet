@@ -1,6 +1,5 @@
 import React from 'react';
-import Lost from './image/NicePng_compass-north-png_4242654.png';
-import './components/Styles/Site.css'
+
 function NotFound() {
     return (
         <div className="NotFound">
@@ -10,7 +9,7 @@ function NotFound() {
             <body className="Body">
 
             <a href={'./'}><img src={Lost} className="Site-logo" alt="logo"/></a>
-<h1> Error 404</h1>
+            <h1> Error 404</h1>
             <h3>Page Not Found</h3>
             </body>
             <footer className={"Footer"}>

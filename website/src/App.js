@@ -1,12 +1,20 @@
-import Navbar from "./components/Navbar";
-import NotFound from './NotFound';
+import NotFound from "./components/pages/NotFound";
+
 function App() {
     return (
-        <div className="App">
-            <Navbar/>
-<NotFound/>
-
-        </div>
-    );
+        <>
+            <Navbar />
+            <div className="container">
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/pricing" element={<NotFound/>} />
+                    <Route path="/about" element={<NotFound />} />
+                    <Route path="/signup" element={<NotFound/>} />
+                </Routes>
+            </div>
+        </>
+    )
 }
+
 export default App;
+
