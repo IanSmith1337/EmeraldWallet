@@ -3,12 +3,12 @@ const { ethers } = require('hardhat')
 const main = async () => {
   const [owner, randomPerson] = await hre.ethers.getSigners()
   const mintyContractInstanceOwnContext = await ethers.getContractAt(
-    'contracts/GCW3Minter.sol:GCW3Minter',
+    'contracts/GCW3MinterWave0.sol:GCW3MinterWave0',
     '0x5fbdb2315678afecb367f032d93f642f64180aa3',
     owner,
   )
   const mintyContractInstanceRandoContext = await ethers.getContractAt(
-    'contracts/GCW3Minter.sol:GCW3Minter',
+    'contracts/GCW3MinterWave0.sol:GCW3MinterWave0',
     '0x5fbdb2315678afecb367f032d93f642f64180aa3',
     randomPerson,
   )
