@@ -1,4 +1,3 @@
-const { ethers } = require('hardhat')
 const main = async () => {
   const [
     owner,
@@ -44,7 +43,7 @@ const main = async () => {
     let balance = await ethers.provider.getBalance(owner.address)
     console.log(balance)
     // this should be enough for 50 tickets...
-    const buyTXoptions = { value: ethers.utils.parseEther('0.5') }
+    const buyTXoptions = { value: hre.ethers.utils.parseEther('0.5') }
     // but the call is only buying 6.
     await raffleContract.buyTickets(6, buyTXoptions)
     */
@@ -54,7 +53,7 @@ const main = async () => {
   await user
   let balance = await ethers.provider.getBalance(owner.address)
   console.log(ethers.BigNumber.from(c).toNumber())
-  const buyTXoptions = { value: ethers.utils.parseEther('0.5') }
+  const buyTXoptions = { value: hre.ethers.utils.parseEther('0.5') }
   await raffleContract.buyTickets(50, buyTXoptions)
   let c = await raffleContract.getTicketCount()
   console.log(ethers.BigNumber.from(c).toNumber())
@@ -111,21 +110,21 @@ const main = async () => {
   await user6
   await user7
   await user8
-  var buyTXoptions = { value: ethers.utils.parseEther('0.1') }
+  var buyTXoptions = { value: hre.ethers.utils.parseEther('0.1') }
   await raffleContract.buyTickets(10, buyTXoptions)
-  buyTXoptions = { value: ethers.utils.parseEther('0.2') }
+  buyTXoptions = { value: hre.ethers.utils.parseEther('0.2') }
   await raffleContract.connect(randomPerson).buyTickets(20, buyTXoptions)
-  buyTXoptions = { value: ethers.utils.parseEther('0.09') }
+  buyTXoptions = { value: hre.ethers.utils.parseEther('0.09') }
   await raffleContract.connect(randomPerson1).buyTickets(9, buyTXoptions)
-  buyTXoptions = { value: ethers.utils.parseEther('0.15') }
+  buyTXoptions = { value: hre.ethers.utils.parseEther('0.15') }
   await raffleContract.connect(randomPerson2).buyTickets(15, buyTXoptions)
-  buyTXoptions = { value: ethers.utils.parseEther('0.06') }
+  buyTXoptions = { value: hre.ethers.utils.parseEther('0.06') }
   await raffleContract.connect(randomPerson3).buyTickets(6, buyTXoptions)
-  buyTXoptions = { value: ethers.utils.parseEther('0.18') }
+  buyTXoptions = { value: hre.ethers.utils.parseEther('0.18') }
   await raffleContract.connect(randomPerson4).buyTickets(18, buyTXoptions)
-  buyTXoptions = { value: ethers.utils.parseEther('0.3') }
+  buyTXoptions = { value: hre.ethers.utils.parseEther('0.3') }
   await raffleContract.connect(randomPerson5).buyTickets(30, buyTXoptions)
-  buyTXoptions = { value: ethers.utils.parseEther('0.25') }
+  buyTXoptions = { value: hre.ethers.utils.parseEther('0.25') }
   await raffleContract.connect(randomPerson6).buyTickets(25, buyTXoptions)
   await raffleContract.calcWeightedArrayFromRaffle()
   let weighted = await raffleContract.getWeightedFromRaffle()
