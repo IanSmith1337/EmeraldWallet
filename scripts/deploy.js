@@ -8,11 +8,12 @@ const main = async () => {
   const GCW3MintFactory = await hre.ethers.getContractFactory('GCW3Minter')
   const GCW3MintContract = await GCW3MintFactory.deploy()
   await GCW3MintContract.deployed()
-  console.log('Minter address: ', GCW3MintContract.address)
 
   const GCW3RaffleFactory = await hre.ethers.getContractFactory('GCW3Raffle')
   const GCW3RaffleContract = await GCW3RaffleFactory.deploy()
   await GCW3RaffleContract.deployed()
+
+  console.log('Minter address: ', GCW3MintContract.address)
   console.log('Raffler address: ', GCW3RaffleContract.address)
 }
 
