@@ -5,7 +5,6 @@ import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/PullPayment.sol";
 
-// Used to join a raffle for a geo-coin NFT.
 abstract contract GCW3Admin is Ownable {
     mapping(address => Admin) private _admins;
     
