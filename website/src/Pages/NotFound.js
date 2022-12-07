@@ -1,5 +1,6 @@
 import React from 'react';
-
+import Lost from '../components/images/favpng_vector-graphics-stock-photography-royalty-free-image-illustration.png'
+import '../components/Styling/website.css'
 function NotFound() {
     return (
         <div className="NotFound">
