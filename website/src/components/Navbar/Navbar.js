@@ -50,7 +50,8 @@ export default function Navbar() {
                 CacheMe
             </Link>
             <ul>
-                <CustomLink to="/pricing">Home </CustomLink>
+                <p className="green-text">●</p>
+                <p className="small-size">{currentAccount.substring(0,10)}..</p>
                 <CustomLink to="/about">About</CustomLink>
                 <button onClick={() => connectWallet()}> Connect Wallet </button>
             </ul>

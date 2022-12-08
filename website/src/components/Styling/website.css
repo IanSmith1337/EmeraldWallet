@@ -8,6 +8,16 @@
     font-size: calc(10px + 2vmin);
     color: white;
 }
+
+.green-text{
+    color: lightgreen; 
+ }
+
+ .small-size{
+    font-size: small;
+    padding-top: 0.35rem;
+ }
+
 a {
     color: white;
     text-decoration: underline;
