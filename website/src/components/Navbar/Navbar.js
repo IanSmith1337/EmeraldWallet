@@ -1,18 +1,12 @@
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
 import React, {useEffect, useState} from "react";
-//import { ethers } from "ethers";
 const { ethers } = require("ethers");
-// import abi from "./utils/CareerFair.json";
 
 
 export default function Navbar() {
     const [currentAccount, setCurrentAccount] = useState("");
-
-    //const contractAddress = "0xe90b023A5d9a9608a1078200eAc9d3A3228D361F";
-
-    //const contractABI = abi.abi;
-
     const checkIfWalletConnected = async () => {
+
         try {
         const { ethereum } = window;
         const accounts = await ethereum.request({ method: "eth_accounts" });
@@ -59,8 +53,6 @@ export default function Navbar() {
                 <CustomLink to="/pricing">Home </CustomLink>
                 <CustomLink to="/about">About</CustomLink>
                 <button onClick={() => connectWallet()}> Connect Wallet </button>
-                <>{currentAccount}</>
-
             </ul>
         </nav>
     )
