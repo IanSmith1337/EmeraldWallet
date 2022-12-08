@@ -13,6 +13,10 @@
     color: lightgreen; 
  }
 
+ .red-text{
+    color: red
+ }
+
  .small-size{
     font-size: small;
     padding-top: 0.35rem;

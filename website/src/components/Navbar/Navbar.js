@@ -4,7 +4,8 @@ const { ethers } = require("ethers");
 
 
 export default function Navbar() {
-    const [currentAccount, setCurrentAccount] = useState("");
+    const [currentAccount, setCurrentAccount] = useState("No account connected.");
+    const [color, toggleColor] = useState("red-text");
     const checkIfWalletConnected = async () => {
 
         try {
@@ -33,6 +34,7 @@ export default function Navbar() {
             const accounts = await ethereum.request({ method: "eth_requestAccounts" });
             console.log("Connected", accounts[0]);
             setCurrentAccount(accounts[0]);
+            toggleColor("green-text")
           }
           
         } catch (error) {
@@ -50,7 +52,7 @@ export default function Navbar() {
                 CacheMe
             </Link>
             <ul>
-                <p className="green-text">●</p>
+                <p className={color}>●</p>
                 <p className="small-size">{currentAccount.substring(0,10)}..</p>
                 <CustomLink to="/about">About</CustomLink>
                 <button onClick={() => connectWallet()}> Connect Wallet </button>
