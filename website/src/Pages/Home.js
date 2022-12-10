@@ -8,7 +8,6 @@ export default function Home() {
   const contractAddress = '0x57b376e2087acae095440da50d443468b797c903'
   const contractABI = abi.abi
   const [text, setText] = useState('')
-  const [registered, setRegistered] = useState(false)
   const register = async () => {
     try {
       const { ethereum } = window
@@ -22,17 +21,7 @@ export default function Home() {
           signer,
         )
 
-
-        const user = await ethereum.request({ method: "eth_requestAccounts" })
-        const currentUserInContract = await raffleContract.registeredUsers(
-          user[0],
-        )
-        console.log(currentUserInContract)
-        if (currentUserInContract > 0) {
-          console.log(currentUserInContract)
-        } else {
-          await raffleContract.addUser().then(setRegistered(true))
-        }
+        await raffleContract.addUser()
       }
     } catch (error) {
       console.log(error)
@@ -52,33 +41,29 @@ export default function Home() {
         </div>
       </div>
       <div className="row">
-        {console.log(registered)}
-        {!registered ? (
-          <div className="containers3">
-            <label>Click here to join raffle.</label>
-            <button className="btns" onClick={register}>
-              Join Raffle
-            </button>
-          </div>
-        ) : (
-          <div className="containers2">
-            <label>Enter the amount of tickets you want and click here.</label>
-            <button className="btns" onClick={''}>
-              Buy Tickets
-            </button>
-            <p className="formfield">
-              <label className="black-text" for="textarea">
-                Amount of Tickets:{' '}
-              </label>
-              <textarea
-                id="textarea"
-                className="txts"
-                onChange={(e) => setText(e.target.value)}
-                value={text}
-              ></textarea>
-            </p>
-          </div>
-        )}
+        <div className="containers3">
+          <label>Click here to join raffle.</label>
+          <button className="btns" onClick={register}>
+            Join Raffle
+          </button>
+        </div>
+        <div className="containers2">
+          <label>Enter the amount of tickets you want and click here.</label>
+          <button className="btns" onClick={''}>
+            Buy Tickets
+          </button>
+          <p className="formfield">
+            <label className="black-text" for="textarea">
+              Amount of Tickets:{' '}
+            </label>
+            <textarea
+              id="textarea"
+              className="txts"
+              onChange={(e) => setText(e.target.value)}
+              value={text}
+            ></textarea>
+          </p>
+        </div>
       </div>
     </div>
   )
