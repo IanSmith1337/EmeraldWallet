@@ -22,8 +22,10 @@ export default function Home() {
           signer,
         )
 
+
+        const user = await ethereum.request({ method: "eth_requestAccounts" })
         const currentUserInContract = await raffleContract.registeredUsers(
-          signer,
+          user[0],
         )
         console.log(currentUserInContract)
         if (currentUserInContract > 0) {
