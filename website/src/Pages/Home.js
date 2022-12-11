@@ -28,6 +28,22 @@ export default function Home() {
     }
   }
 
+  const buyTicket = async(text) =>{
+    console.log(text)
+    try {
+      const { ethereum } = window;
+
+    if (ethereum){
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      const raffleContract = new ethers.Contract(contractAddress, contractABI, signer);
+      await raffleContract.buyTickets(parseInt(text))
+    }
+    } catch (error) {
+      console.log("error")
+    }
+  }
+
   return (
     <div>
       <div className="row">
@@ -49,11 +65,11 @@ export default function Home() {
         </div>
         <div className="containers2">
           <label>Enter the amount of tickets you want and click here.</label>
-          <button className="btns" onClick={''}>
+          <button className="btns" onClick={() => buyTicket(text)}>
             Buy Tickets
           </button>
           <p className="formfield">
-            <label className="black-text" for="textarea">
+            <label className="black-text" htmlFor="textarea">
               Amount of Tickets:{' '}
             </label>
             <textarea
