@@ -28,21 +28,26 @@ export default function Home() {
     }
   }
 
-  const buyTicket = async(text) =>{
+  const buyTicket = async (text) => {
     let numTickets = parseInt(text)
     console.log(numTickets)
     try {
-      const { ethereum } = window;
+      const { ethereum } = window
 
-    if (ethereum){
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
-      const raffleContract = new ethers.Contract(contractAddress, contractABI, signer);
-      var buyTXoptions = { value: ethers.utils.parseEther('0.01') }
-      await raffleContract.buyTickets(numTickets, buyTXoptions)
-    }
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const raffleContract = new ethers.Contract(
+          contractAddress,
+          contractABI,
+          signer,
+        )
+        var paymentAmount = 0.01 * Number.parseInt(text)
+        var buyTXoptions = { value: ethers.utils.parseEther(paymentAmount) }
+        await raffleContract.buyTickets(numTickets, buyTXoptions)
+      }
     } catch (error) {
-      console.log("error")
+      console.log('error')
     }
   }
 
