@@ -29,7 +29,8 @@ export default function Home() {
   }
 
   const buyTicket = async(text) =>{
-    console.log(text)
+    let numTickets = parseInt(text)
+    console.log(numTickets)
     try {
       const { ethereum } = window;
 
@@ -37,7 +38,8 @@ export default function Home() {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
       const raffleContract = new ethers.Contract(contractAddress, contractABI, signer);
-      await raffleContract.buyTickets(parseInt(text))
+      var buyTXoptions = { value: ethers.utils.parseEther('0.01') }
+      await raffleContract.buyTickets(numTickets, buyTXoptions)
     }
     } catch (error) {
       console.log("error")
