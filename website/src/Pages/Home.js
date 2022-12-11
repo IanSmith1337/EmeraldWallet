@@ -43,7 +43,9 @@ export default function Home() {
           signer,
         )
         var paymentAmount = 0.01 * Number.parseInt(text)
-        var buyTXoptions = { value: ethers.utils.parseEther(paymentAmount) }
+        var buyTXoptions = {
+          value: ethers.utils.parseEther(paymentAmount.toString()),
+        }
         await raffleContract.buyTickets(numTickets, buyTXoptions)
       }
     } catch (error) {
