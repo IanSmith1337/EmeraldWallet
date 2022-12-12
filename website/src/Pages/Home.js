@@ -6,8 +6,8 @@ const { useState, useEffect } = require('react')
 
 export default function Home() {
   // Raffle Contract.
-  const contractAddress = '0xC0FE64678c97B62D24F33D414686cbAba7471E79'
-  const contractAddressMinter = '0x9849a8C5060Ab5E69827b5B044B8E09E90692754'
+  const contractAddress = '0x40f80B12219B0b5DD960924839c2C64c6D69C554'
+  const contractAddressMinter = '0x1151687dA27860D52197b0864AC4EdC7E8bb5AC4'
   const contractABI = abi.abi
   const contractABIMinter = abi2.abi
   const [text, setText] = useState('')

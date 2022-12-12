@@ -1,13 +1,8 @@
-# Sample Hardhat Project
+# CacheMe
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+A new NFT on the block, combining Geocaching with the blockchain.
 
-Try running some of the following tasks:
+## Contract Addresses:
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
+Minter: https://goerli.etherscan.io/address/0x1151687da27860d52197b0864ac4edc7e8bb5ac4
+Raffler: https://goerli.etherscan.io/address/0x40f80B12219B0b5DD960924839c2C64c6D69C554
