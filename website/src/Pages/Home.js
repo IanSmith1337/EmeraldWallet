@@ -97,25 +97,7 @@ export default function Home() {
     }
   }
 
-  const pullWinners = async function (num, wA, contract, minter) {
-    let wins = await contract.getWinnersFromRaffle()
-    let current = 0
-    let end = num
-    let max = minter.getSupply()
-    while (current < end && wins.length < max) {
-      try {
-        var addr = wA[Math.floor(Math.random() * wA.length)]
-        await contract.setWinnersFromRaffle(addr)
-        wins = await contract.getWinnersFromRaffle()
-        current++
-      } catch (error) {
-        continue
-      }
-    }
-    return wins
-  }
-
-  const awardAndMint = async () => {
+  const calcWeighted = async () => {
     try {
       const { ethereum } = window
 
@@ -127,31 +109,65 @@ export default function Home() {
           contractABI,
           signer,
         )
-        const minterContract = new ethers.Contract(
-          contractAddressMinter,
-          contractABIMinter,
+
+        await raffleContract.calcWeightedArrayFromRaffle({
+          gasLimit: 2000,
+        })
+      }
+    } catch (error) {
+      console.log('error')
+    }
+  }
+
+  const draw = async () => {
+    try {
+      const { ethereum } = window
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const raffleContract = new ethers.Contract(
+          contractAddress,
+          contractABI,
           signer,
         )
 
-        await raffleContract.calcWeightedArrayFromRaffle()
-        let weighted = await raffleContract.getWeightedFromRaffle()
-        const wArray = await weighted
-        var winnersList = await pullWinners(
-          1,
-          wArray,
-          raffleContract,
-          minterContract,
+        var wArray = await raffleContract.getWeightedFromRaffle()
+        console.log(wArray)
+        var addr = wArray[Math.floor(Math.random() * wArray.length)]
+        await raffleContract.setWinnersFromRaffle(addr)
+      }
+    } catch (error) {
+      console.log('error')
+    }
+  }
+
+  const mint = async () => {
+    try {
+      const { ethereum } = window
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+
+        const minterContract = new ethers.Contract(
+          contractAddressMinter,
+          contractABI,
+          signer,
         )
 
-        console.log(winnersList)
-        if (winnersList.length > 0) {
-          console.log('Drawing #1 Winners:')
-          winnersList.forEach((win) => {
-            console.log(' hi ', win.toString())
-            minterContract.mintTo(win)
-          })
-          setWinners(winnersList.toString())
-        }
+        const raffleContract = new ethers.Contract(
+          contractAddress,
+          contractABI,
+          signer,
+        )
+
+        var winList = await raffleContract.getWinnersFromRaffle()
+
+        winList.forEach((win) => {
+          console.log(win.toString())
+          minterContract.mintTo(win)
+        })
       }
     } catch (error) {
       console.log('error')
@@ -231,12 +247,12 @@ export default function Home() {
       )}
       {!admin && (
         <div>
-          <button onClick={awardAndMint}> Select Winners and Mint Nfts</button>
+          <button onClick={calcWeighted}>Calc weighted</button>
+          <button onClick={draw}>draw</button>
+          <button onClick={mint}>mint</button>
           <button onClick={reset}> Reset Raffle</button>
           <h1>Currently Registered:</h1>
           <p>{registered}</p>
-          <h1>Winners:</h1>
-          <p>{winners}</p>
         </div>
       )}
     </div>
