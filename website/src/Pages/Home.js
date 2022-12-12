@@ -1,7 +1,6 @@
 import React from 'react'
-import abi from './utils/GCW3Raffle.json'
-import ReactDOM from 'react-dom'
-import Countdown from 'react-countdown'
+import abi from './utils/GCW3RaffleV2.json'
+import abi2 from './utils/GCW3MinterWave0V2.json'
 const { ethers } = require('ethers')
 const { useState, useEffect } = require('react')
 
@@ -10,9 +9,11 @@ export default function Home() {
   const contractAddress = '0xC0FE64678c97B62D24F33D414686cbAba7471E79'
   const contractAddressMinter = '0x9849a8C5060Ab5E69827b5B044B8E09E90692754'
   const contractABI = abi.abi
+  const contractABIMinter = abi2.abi
   const [text, setText] = useState('')
   const [admin, setAdmin] = useState(false)
-  const [registered, setRegistered] = useState('')
+  const [registered, setRegistered] = useState('No one registered.')
+  const [winners, setWinners] = useState('No winners.')
 
   const register = async () => {
     try {
@@ -85,7 +86,8 @@ export default function Home() {
           signer,
         )
 
-        setRegistered(await raffleContract.getWeightedFromRaffle())
+        setRegistered(await raffleContract.getAllFromRaffle())
+        
       }
     } catch (error) {
       console.log(error)
@@ -124,7 +126,7 @@ export default function Home() {
         )
         const minterContract = new ethers.Contract(
           contractAddressMinter,
-          contractABI,
+          contractABIMinter,
           signer,
         )
 
@@ -137,13 +139,15 @@ export default function Home() {
           raffleContract,
           minterContract,
         )
-        console.log(' ')
+        
+        console.log(winnersList)
         if (winnersList.length > 0) {
           console.log('Drawing #1 Winners:')
           winnersList.forEach((win) => {
-            //Min to goes here.
-            console.log(win)
+            console.log(" hi " , win.toString())
+            minterContract.mintTo(win)
           })
+          setWinners(winnersList.toString())
         }
       }
     } catch (error) {
@@ -203,11 +207,13 @@ export default function Home() {
           </div>
         </div>
       )}
-      {admin && (
+      {!admin && (
         <div>
-          <button onClick={awardAndMint}> Select Winners and Min Nfts</button>
+          <button onClick={awardAndMint}> Select Winners and Mint Nfts</button>
           <h1> Currently Registered:</h1>
           <p>{registered}</p>
+          <h1> Winners:</h1>
+          <p>{winners}</p>
         </div>
       )}
     </div>
