@@ -3,13 +3,16 @@ import abi from './utils/GCW3Raffle.json'
 import ReactDOM from 'react-dom';
 import Countdown from 'react-countdown';
 const { ethers } = require('ethers')
-const { useState } = require('react')
+const { useState, useEffect } = require('react')
 
 export default function Home() {
   // Raffle Contract.
   const contractAddress = '0x57b376e2087acae095440da50d443468b797c903'
   const contractABI = abi.abi
   const [text, setText] = useState('')
+  const [admin, setAdmin] = useState(false)
+  const [registered,setRegistered] = useState('')
+
   const register = async () => {
     try {
       const { ethereum } = window
@@ -55,28 +58,102 @@ export default function Home() {
     }
   }
 
-  const Completionist = () => <span>You are good to go!</span>;
-
-  // Renderer callback with condition
-  const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    if (completed) {
-      // Render a completed state
-      return <Completionist />;
-    } else {
-      // Render a countdown
-      return <span>{days}:{hours}:{minutes}:{seconds}</span>;
+  const checkIfAdmin = async () => {
+    try {
+      const {ethereum} = window
+      const address = await ethereum.request({method: "eth_accounts"});
+      console.log(address)
+      if (address.length == ' 0xA24b6Cab97696c22954DAEbd4747C2B57839FB2F') 
+        setAdmin(true)
+      else
+        console.log("Regular user")
+    } catch (error) {
+      console.log('error')
     }
-  };
+  }
 
+  const getRegistered = async () => {
+    try {
+      const { ethereum } = window
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const raffleContract = new ethers.Contract(
+          contractAddress,
+          contractABI,
+          signer,
+        )
+
+        setRegistered(await raffleContract.getWeightedFromRaffle())
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const pullWinners = async function (num, wA, contract) {
+    let wins = await contract.getWinnersFromRaffle()
+    let count = wins.length + num
+    while (wins.length < count) {
+      try {
+        var addr = wA[Math.floor(Math.random() * wA.length)]
+        await contract.setWinnersFromRaffle(addr)
+        wins = await contract.getWinnersFromRaffle()
+      } catch (error) {
+        continue
+      }
+    }
+    return wins
+  }
+
+
+  const awardAndMint = async () => {
+    try {
+      const { ethereum } = window
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const raffleContract = new ethers.Contract(
+          contractAddress,
+          contractABI,
+          signer,
+        )
+        
+        await raffleContract.calcWeightedArrayFromRaffle()
+        let weighted = await raffleContract.getWeightedFromRaffle()
+        const wArray = await weighted
+        var winnersList = await pullWinners(1, wArray, raffleContract)
+        console.log(' ')
+        if (winnersList.length > 0) {
+          console.log('Drawing #1 Winners:')
+          winnersList.forEach((win) => {
+            //Min to goes here.
+            console.log(win)
+          })
+        }
+        
+      }
+    
+    } catch (error) {
+      console.log('error')
+    }
+  }
+
+  useEffect(() => {
+    checkIfAdmin();
+  }, [])
+
+  useEffect(() => {
+    getRegistered();
+  }, [])
+
+  
+  //remember to flip admin.
   return (
     <div>
-      <Countdown
-        date={Date.now() + 10000} 
-        intervalDelay={0}
-        precision={3}
-        renderer={renderer}
-      />
-      <div>
+      {!admin && (<div>
         <div className="row">
           <div className="containers">
             <h2>Welcome to Web3 Geocaching!</h2>
@@ -112,7 +189,12 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </div>
+      </div>)}
+      {admin && (<div>
+        <button onClick={awardAndMint}> Select Winners and Min Nfts</button>
+        <h1> Currently Registered:</h1>
+        <p>{registered}</p>
+      </div>)}
     </div>
   )
 }
