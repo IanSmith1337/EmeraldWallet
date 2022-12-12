@@ -74,7 +74,7 @@ export default function Home() {
         var regs = await raffleContract.getAllFromRaffle()
         var registerList = []
         regs.forEach((add) => {
-          registerList.push(add + '\n')
+          registerList.push(<p key={add}>{add}</p>)
         })
         setRegistered(registerList)
       }
@@ -216,17 +216,21 @@ export default function Home() {
                   onChange={(e) => setText(e.target.value)}
                   value={text}
                 ></textarea>
-                <button
-                  onClick={() => {
-                    if (admin) {
-                      setAdmin(true)
-                    }
-                  }}
-                >
-                  Open Admin Console
-                </button>
               </p>
             </div>
+          </div>
+          <div className="containers" style={{ height: '50%' }}>
+            <span></span>
+            <button
+              onClick={() => {
+                if (!admin) {
+                  setAdmin(true)
+                }
+              }}
+            >
+              Open Admin Console
+            </button>
+            <span></span>
           </div>
         </div>
       )}
@@ -240,7 +244,7 @@ export default function Home() {
           <button onClick={mint}>mint</button>
           <button onClick={reset}> Reset Raffle</button>
           <h1>Currently Registered:</h1>
-          <p>{registered}</p>
+          <div>{registered}</div>
           <button
             onClick={() => {
               if (admin) {
