@@ -9,7 +9,7 @@ const main = async () => {
     randomPerson5,
     randomPerson6,
   ] = await hre.ethers.getSigners()
-  const raffleFactory = await hre.ethers.getContractFactory('GCW3Raffle')
+  const raffleFactory = await hre.ethers.getContractFactory('GCW3RaffleV2')
   const raffleContract = await raffleFactory.deploy()
   await raffleContract.deployed()
 
@@ -127,6 +127,9 @@ const main = async () => {
   buyTXoptions = { value: hre.ethers.utils.parseEther('0.25') }
   await raffleContract.connect(randomPerson6).buyTickets(25, buyTXoptions)
   await raffleContract.calcWeightedArrayFromRaffle()
+  let reg = await raffleContract.getAllFromRaffle()
+  const ra = await reg
+  console.log(ra)
   let weighted = await raffleContract.getWeightedFromRaffle()
   const wArray = await weighted
   var winnersList = await pullWinners(1, wArray, raffleContract)
@@ -145,6 +148,16 @@ const main = async () => {
       console.log(win)
     })
   }
+
+  await raffleContract.OpAddress(randomPerson.address)
+  await raffleContract.DeOpAddress(randomPerson.address)
+
+  var accountBalance = await owner.getBalance()
+  console.log(accountBalance)
+  await raffleContract.withdrawPayments(owner.address)
+  accountBalance = await owner.getBalance()
+  console.log(accountBalance)
+
   console.log(' ')
 }
 
