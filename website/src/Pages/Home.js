@@ -85,7 +85,7 @@ export default function Home() {
           contractABI,
           signer,
         )
-
+        console.log( "hi" ,await raffleContract.getAllFromRaffle())
         setRegistered(await raffleContract.getAllFromRaffle())
         
       }
@@ -155,12 +155,31 @@ export default function Home() {
     }
   }
 
+  const reset = async () => {
+    try {
+      const { ethereum } = window
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const raffleContract = new ethers.Contract(
+          contractAddress,
+          contractABI,
+          signer,
+        )
+        await raffleContract.reset()
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
-    checkIfAdmin()
+    checkIfAdmin();
   }, [])
 
   useEffect(() => {
-    getRegistered()
+    getRegistered();
   }, [])
 
   //remember to flip admin.
@@ -210,9 +229,10 @@ export default function Home() {
       {!admin && (
         <div>
           <button onClick={awardAndMint}> Select Winners and Mint Nfts</button>
-          <h1> Currently Registered:</h1>
+          <button onClick={reset}> Reset Raffle</button>
+          <h1>Currently Registered:</h1>
           <p>{registered}</p>
-          <h1> Winners:</h1>
+          <h1>Winners:</h1>
           <p>{winners}</p>
         </div>
       )}
