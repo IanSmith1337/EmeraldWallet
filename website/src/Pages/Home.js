@@ -11,9 +11,8 @@ export default function Home() {
   const contractABI = abi.abi
   const contractABIMinter = abi2.abi
   const [text, setText] = useState('')
-  const [admin, setAdmin] = useState(false)
   const [registered, setRegistered] = useState('No one registered.')
-  const [winners, setWinners] = useState('No winners.')
+  const [admin, setAdmin] = useState(false)
 
   const register = async () => {
     try {
@@ -60,19 +59,6 @@ export default function Home() {
     }
   }
 
-  const checkIfAdmin = async () => {
-    try {
-      const { ethereum } = window
-      const address = await ethereum.request({ method: 'eth_accounts' })
-      console.log(address)
-      if (address.length === ' 0xA24b6Cab97696c22954DAEbd4747C2B57839FB2F')
-        setAdmin(true)
-      else console.log('Regular user')
-    } catch (error) {
-      console.log('error')
-    }
-  }
-
   const getRegistered = async () => {
     try {
       const { ethereum } = window
@@ -110,9 +96,7 @@ export default function Home() {
           signer,
         )
 
-        await raffleContract.calcWeightedArrayFromRaffle({
-          gasLimit: 2000,
-        })
+        await raffleContract.calcWeightedArrayFromRaffle()
       }
     } catch (error) {
       console.log('error')
@@ -143,34 +127,30 @@ export default function Home() {
   }
 
   const mint = async () => {
-    try {
-      const { ethereum } = window
+    const { ethereum } = window
 
-      if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum)
-        const signer = provider.getSigner()
+    if (ethereum) {
+      const provider = new ethers.providers.Web3Provider(ethereum)
+      const signer = provider.getSigner()
 
-        const minterContract = new ethers.Contract(
-          contractAddressMinter,
-          contractABI,
-          signer,
-        )
+      const minterContract = new ethers.Contract(
+        contractAddressMinter,
+        contractABIMinter,
+        signer,
+      )
 
-        const raffleContract = new ethers.Contract(
-          contractAddress,
-          contractABI,
-          signer,
-        )
+      const raffleContract = new ethers.Contract(
+        contractAddress,
+        contractABI,
+        signer,
+      )
 
-        var winList = await raffleContract.getWinnersFromRaffle()
+      var winList = await raffleContract.getWinnersFromRaffle()
 
-        winList.forEach((win) => {
-          console.log(win.toString())
-          minterContract.mintTo(win)
-        })
-      }
-    } catch (error) {
-      console.log('error')
+      winList.forEach((win) => {
+        console.log(win.toString())
+        minterContract.mintTo(win)
+      })
     }
   }
 
@@ -192,10 +172,6 @@ export default function Home() {
       console.log(error)
     }
   }
-
-  useEffect(() => {
-    checkIfAdmin()
-  }, [])
 
   useEffect(() => {
     getRegistered()
@@ -240,19 +216,40 @@ export default function Home() {
                   onChange={(e) => setText(e.target.value)}
                   value={text}
                 ></textarea>
+                <button
+                  onClick={() => {
+                    if (admin) {
+                      setAdmin(true)
+                    }
+                  }}
+                >
+                  Open Admin Console
+                </button>
               </p>
             </div>
           </div>
         </div>
       )}
-      {!admin && (
-        <div>
+      {admin && (
+        <div className="containers">
+          <strong>
+            <h2>Admin Panel</h2>
+          </strong>
           <button onClick={calcWeighted}>Calc weighted</button>
           <button onClick={draw}>draw</button>
           <button onClick={mint}>mint</button>
           <button onClick={reset}> Reset Raffle</button>
           <h1>Currently Registered:</h1>
           <p>{registered}</p>
+          <button
+            onClick={() => {
+              if (admin) {
+                setAdmin(false)
+              }
+            }}
+          >
+            Close Admin Console
+          </button>
         </div>
       )}
     </div>
