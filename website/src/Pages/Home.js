@@ -86,10 +86,11 @@ export default function Home() {
           signer,
         )
         var regs = await raffleContract.getAllFromRaffle()
+        var registerList = []
         regs.forEach((add) => {
-          console.log('hi ' + add)
+          registerList.push(add + '\n')
         })
-        setRegistered(regs)
+        setRegistered(registerList)
       }
     } catch (error) {
       console.log(error)
