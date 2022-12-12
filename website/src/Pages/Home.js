@@ -65,7 +65,7 @@ export default function Home() {
       const { ethereum } = window
       const address = await ethereum.request({ method: 'eth_accounts' })
       console.log(address)
-      if (address.length == ' 0xA24b6Cab97696c22954DAEbd4747C2B57839FB2F')
+      if (address.length === ' 0xA24b6Cab97696c22954DAEbd4747C2B57839FB2F')
         setAdmin(true)
       else console.log('Regular user')
     } catch (error) {
@@ -85,9 +85,11 @@ export default function Home() {
           contractABI,
           signer,
         )
-        console.log( "hi" ,await raffleContract.getAllFromRaffle())
-        setRegistered(await raffleContract.getAllFromRaffle())
-        
+        var regs = await raffleContract.getAllFromRaffle()
+        regs.forEach((add) => {
+          console.log('hi ' + add)
+        })
+        setRegistered(regs)
       }
     } catch (error) {
       console.log(error)
@@ -139,12 +141,12 @@ export default function Home() {
           raffleContract,
           minterContract,
         )
-        
+
         console.log(winnersList)
         if (winnersList.length > 0) {
           console.log('Drawing #1 Winners:')
           winnersList.forEach((win) => {
-            console.log(" hi " , win.toString())
+            console.log(' hi ', win.toString())
             minterContract.mintTo(win)
           })
           setWinners(winnersList.toString())
@@ -175,11 +177,11 @@ export default function Home() {
   }
 
   useEffect(() => {
-    checkIfAdmin();
+    checkIfAdmin()
   }, [])
 
   useEffect(() => {
-    getRegistered();
+    getRegistered()
   }, [])
 
   //remember to flip admin.
